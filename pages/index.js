@@ -32,9 +32,10 @@ export async function getServerSideProps({ req }) {
 
 export default function Home({ allPostsData, currentHost }) {
   let parser = new Parser();
-
+  const feedUrl = `${currentHost}/api/rss?feedUrl=https://news.yahoo.com/rss/world`;
+  console.log('==== feedUrl', feedUrl);
   const getRss = (async () => {
-    let feed = await parser.parseURL(`${currentHost} '/?feedUrl=https://news.yahoo.com/rss/world'`);
+    let feed = await parser.parseURL(feedUrl);
     console.log(feed.title);
   
     feed.items.forEach(item => {
