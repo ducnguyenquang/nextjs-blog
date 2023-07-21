@@ -8,20 +8,33 @@ import Parser from 'rss-parser';
 
 
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+// export async function getStaticProps() {
+//   const allPostsData = getSortedPostsData();
+
+//   return {
+//     props: {
+//       allPostsData
+//     }
+//   }
+// }
+
+export async function getServerSideProps({ req }) {
+  const currentHost = req.headers.host || ''; // Get the host from the request headers
+  const allPostsData = getSortedPostsData();
+
   return {
     props: {
-      allPostsData
-    }
-  }
+      currentHost,
+      allPostsData,
+    },
+  };
 }
 
-export default function Home({ allPostsData }) {
+export default function Home({ allPostsData, currentHost }) {
   let parser = new Parser();
-  
+
   const getRss = (async () => {
-    let feed = await parser.parseURL(`${window.location.origin} '/?feedUrl=https://news.yahoo.com/rss/world'`);
+    let feed = await parser.parseURL(`${currentHost} '/?feedUrl=https://news.yahoo.com/rss/world'`);
     console.log(feed.title);
   
     feed.items.forEach(item => {
