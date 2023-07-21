@@ -6,8 +6,6 @@ import Link from 'next/link';
 import Date from '../components/date';
 import Parser from 'rss-parser';
 
-
-
 // export async function getStaticProps() {
 //   const allPostsData = getSortedPostsData();
 
@@ -19,7 +17,7 @@ import Parser from 'rss-parser';
 // }
 
 export async function getServerSideProps({ req }) {
-  const currentHost = req.headers.host || ''; // Get the host from the request headers
+  const currentHost = req.headers.referer || ''; 
   const allPostsData = getSortedPostsData();
 
   return {
@@ -32,11 +30,14 @@ export async function getServerSideProps({ req }) {
 
 export default function Home({ allPostsData, currentHost }) {
   let parser = new Parser();
-  const feedUrl = `${currentHost}/api/rss?feedUrl=https://news.yahoo.com/rss/world`;
-  console.log('==== feedUrl', feedUrl);
+  const rssLink = encodeURI('https://news.yahoo.com/rss/world');
+  const feedUrl = `${currentHost}api/rss/?feedUrl=${rssLink}`;
   const getRss = (async () => {
-    let feed = await parser.parseURL(feedUrl);
-    console.log(feed.title);
+    // let feed = await parser.parseURL(feedUrl);
+    let feed = await parser.parseURL(rssLink);
+
+
+    console.log('==== feed',feed);
   
     feed.items.forEach(item => {
       console.log(item.title + ':' + item.link)
