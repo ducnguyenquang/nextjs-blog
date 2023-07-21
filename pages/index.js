@@ -21,7 +21,7 @@ export default function Home({ allPostsData }) {
   let parser = new Parser();
   
   const getRss = (async () => {
-    let feed = await parser.parseURL('https://news.yahoo.com/rss/world');
+    let feed = await parser.parseURL(`${window.location.origin} '/?feedUrl=https://news.yahoo.com/rss/world'`);
     console.log(feed.title);
   
     feed.items.forEach(item => {
