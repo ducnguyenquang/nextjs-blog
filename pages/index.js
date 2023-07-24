@@ -19,9 +19,11 @@ import React, { useState , useEffect, useCallback } from 'react';
 // }
 
 export async function getServerSideProps({ req }) {
-  const currentHost = req.headers.referer || ''; 
-  const allPostsData = getSortedPostsData();
+  // const currentHost = req.headers.referer || ''; 
+  const currentHost = `${req.headers['x-forwarded-proto']}://${req.headers.host}/` || ''; 
 
+  const allPostsData = getSortedPostsData();
+  console.log('==== currentHost', currentHost);
   return {
     props: {
       currentHost,
