@@ -45,8 +45,24 @@
 
 .listItem {
   margin: 0 0 1.25rem;
+  display: flex;
 }
 
 .lightText {
   color: #666;
+}
+
+.itemBlock {
+  display: flex;
+}
+
+.left {
+  height: "attr(height) px";
+  width: "attr(width) px";
+  flex: 1 1 auto;
+  min-width: 20%;
+}
+
+.right {
+  padding-left: 1rem;
 }
