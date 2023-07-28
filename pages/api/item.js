@@ -7,7 +7,11 @@ import {
   DeleteItemCommand,
 } from '@aws-sdk/client-dynamodb';
 
-const client = new DynamoDBClient({});
+const client = new DynamoDBClient({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
 export default async function handler(req, res) {
   const { id, slug, title, content} = req.body
